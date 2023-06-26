@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather API</title>
+    <style>
+
+      
+
+      .container {
+        margin: 50px auto;
+        background: linear-gradient(45deg,red,lightblue,rgb(84, 231, 84),yellow);
+        height: 500px;
+        width: 600px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+      }
+
+      h1 {
+        font-size: 2em;
+        text-transform: capitalize;
+        text-align: center;
+      }
+      input {
+        cursor: pointer;
+        font-size: 1.5em;
+        text-transform: capitalize;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+      }
+      input::placeholder {
+        color: #fff;
+      }
+      form:nth-child(2) {
+        border: 1px solid black;
+        box-shadow: 0px 0px 30px rgba(0,0,0,0.9);
+      }
+      form {
+        border-bottom: 1px solid black;
+        padding: 20px;
+        margin: 10px;
+      }
+      #result , #hum{
+        padding: 10px;
+        font-size: 2em;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Weather ForeCast</h1>
+      <form>
+        <input type="text" id="city" placeholder="enter city name" /><input
+          type="submit"
+          value="Get Weather"
+          onclick="getWeather()"
+        />
+
+      </form>
+
+      <div id="result"></div>
+      <div id="hum"></div>
+    </div>
+
+    <script>
+      function getWeather() {
+        /*71ea863a676e60d90cf77041d1dbc36f*/
+        event.preventDefault();
+        let city = document.getElementById("city").value;
+
+        let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=71ea863a676e60d90cf77041d1dbc36f`;
+
+        fetch(url)
+          .then((res) => res.json())
+          .then((data) => {
+            let temp = data.main.temp - 273.15;
+            temp = temp.toFixed(2);
+            console.log(data)
+            document.getElementById("result").textContent = `Weather in ${city} is ${temp}C`;
+            document.getElementById("hum").textContent = `humidity in ${city} is ${data.main.humidity}`;
+          });
+      }
+    </script>
+  </body>
+</html>
